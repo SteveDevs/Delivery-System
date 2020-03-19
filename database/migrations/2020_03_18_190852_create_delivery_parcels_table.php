@@ -14,9 +14,13 @@ class CreateDeliveryParcelsTable extends Migration
     public function up()
     {
         Schema::create('delivery_parcels', function (Blueprint $table) {
+            $table->primary(['delivery_id', 'parcel_id']);
             $table->bigInteger('delivery_id');
             $table->bigInteger('parcel_id');
+            //$table->foreign('delivery_id')->references('id')->on('deliveries')->onDelete('cascade');
+            //$table->foreign('parcel_id')->references('id')->on('parcels')->onDelete('cascade');
             $table->timestamps();
+            
         });
     }
 

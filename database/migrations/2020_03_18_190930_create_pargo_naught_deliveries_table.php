@@ -14,11 +14,15 @@ class CreatePargoNaughtDeliveriesTable extends Migration
     public function up()
     {
         Schema::create('pargo_naught_deliveries', function (Blueprint $table) {
-            $table->id();
+            
             $table->bigInteger('pargo_naught_id');
             $table->bigInteger('delivery_id');
             $table->bigInteger('parcel_id');
+            //$table->foreign('pargo_naught_id')->references('id')->on('pargo_naughts')->onDelete('cascade');
+            //$table->foreign('delivery_id')->references('id')->on('deliveries')->onDelete('cascade');
+            //$table->foreign('parcel_id')->references('id')->on('parcels')->onDelete('cascade');
             $table->timestamps();
+            $table->primary(['pargo_naught_id', 'delivery_id']);
         });
     }
 

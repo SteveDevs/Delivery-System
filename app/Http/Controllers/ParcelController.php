@@ -14,7 +14,8 @@ class ParcelController extends Controller
      */
     public function index()
     {
-        //
+        $parcels = Parcel::all();
+        return view('parcels.index',['parcels'=>$parcels]);
     }
 
     /**
@@ -24,7 +25,7 @@ class ParcelController extends Controller
      */
     public function create()
     {
-        //
+        return view('employees.create');
     }
 
     /**
@@ -35,7 +36,13 @@ class ParcelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $employee = new Employee();
+        $employee->firstname = $request->input('firstname');
+        $employee->lastname = $request->input('lastname');
+        $employee->department = $request->input('department');
+        $employee->phone = $request->input('phone');
+        $employee->save();
+        return redirect()->route('employees.index')->with('info','Employee Added Successfully');
     }
 
     /**
@@ -57,7 +64,8 @@ class ParcelController extends Controller
      */
     public function edit(Parcel $parcel)
     {
-        //
+        $employee = Employee::find($id);
+        return view('employee.edit',['employee'=> $employee]);
     }
 
     /**
@@ -69,7 +77,13 @@ class ParcelController extends Controller
      */
     public function update(Request $request, Parcel $parcel)
     {
-        //
+        $employee = Employee::find($request->input('id'));
+        $employee->firstname = $request->input('firstname');
+        $employee->lastname = $request->input('lastname');
+        $employee->department = $request->input('department');
+        $employee->phone = $request->input('phone');
+        $employee->save(); //persist the data
+        return redirect()->route('employees.index')->with('info','Employee Updated Successfully');
     }
 
     /**
@@ -80,6 +94,8 @@ class ParcelController extends Controller
      */
     public function destroy(Parcel $parcel)
     {
-        //
+        $employee = Employee::find($id);
+        $employee->delete();
+        return redirect()->route('employees.index');
     }
 }

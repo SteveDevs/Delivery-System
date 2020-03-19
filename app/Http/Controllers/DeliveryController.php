@@ -14,7 +14,8 @@ class DeliveryController extends Controller
      */
     public function index()
     {
-        //
+        $deliveries = Delivery::all();
+        return view('parcels.index',['deliveries'=>$deliveries]);
     }
 
     /**
@@ -24,7 +25,7 @@ class DeliveryController extends Controller
      */
     public function create()
     {
-        //
+        return view('deliveries.create');
     }
 
     /**
@@ -35,7 +36,13 @@ class DeliveryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $delivery = new Delivery();
+        $delivery->firstname = $request->input('firstname');
+        $delivery->lastname = $request->input('lastname');
+        $delivery->department = $request->input('department');
+        $delivery->phone = $request->input('phone');
+        $employee->save();
+        return redirect()->route('employees.index')->with('info','Employee Added Successfully');
     }
 
     /**
@@ -57,7 +64,8 @@ class DeliveryController extends Controller
      */
     public function edit(Delivery $delivery)
     {
-        //
+        $employee = Employee::find($id);
+        return view('employee.edit',['employee'=> $employee]);
     }
 
     /**
@@ -69,7 +77,13 @@ class DeliveryController extends Controller
      */
     public function update(Request $request, Delivery $delivery)
     {
-        //
+        $employee = Employee::find($request->input('id'));
+        $employee->firstname = $request->input('firstname');
+        $employee->lastname = $request->input('lastname');
+        $employee->department = $request->input('department');
+        $employee->phone = $request->input('phone');
+        $employee->save(); //persist the data
+        return redirect()->route('employees.index')->with('info','Employee Updated Successfully');
     }
 
     /**
