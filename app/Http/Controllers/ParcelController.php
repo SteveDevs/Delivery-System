@@ -25,7 +25,7 @@ class ParcelController extends Controller
      */
     public function create()
     {
-        return view('employees.create');
+        return view('parcel.create');
     }
 
     /**
@@ -36,13 +36,13 @@ class ParcelController extends Controller
      */
     public function store(Request $request)
     {
-        $employee = new Employee();
-        $employee->firstname = $request->input('firstname');
-        $employee->lastname = $request->input('lastname');
-        $employee->department = $request->input('department');
+        $parcel = new Parcel();
+        $parcel->firstname = $request->input('firstname');
+        $parcel->lastname = $request->input('lastname');
+        $parcel->department = $request->input('department');
         $employee->phone = $request->input('phone');
         $employee->save();
-        return redirect()->route('employees.index')->with('info','Employee Added Successfully');
+        return redirect()->route('parcels.index')->with('info','Employee Added Successfully');
     }
 
     /**
@@ -53,7 +53,7 @@ class ParcelController extends Controller
      */
     public function show(Parcel $parcel)
     {
-        //
+        return view('parcel.parcel', ['parcel' => Parcel::findOrFail($id)]);
     }
 
     /**
@@ -64,8 +64,8 @@ class ParcelController extends Controller
      */
     public function edit(Parcel $parcel)
     {
-        $employee = Employee::find($id);
-        return view('employee.edit',['employee'=> $employee]);
+        $parcel = Parcel::find($id);
+        return view('parcel.edit',['parcel'=> $parcel]);
     }
 
     /**
@@ -77,13 +77,13 @@ class ParcelController extends Controller
      */
     public function update(Request $request, Parcel $parcel)
     {
-        $employee = Employee::find($request->input('id'));
-        $employee->firstname = $request->input('firstname');
-        $employee->lastname = $request->input('lastname');
-        $employee->department = $request->input('department');
+        $parcel = Parcel::find($request->input('id'));
+        $parcel->firstname = $request->input('firstname');
+        $parcel->lastname = $request->input('lastname');
+        $parcel->department = $request->input('department');
         $employee->phone = $request->input('phone');
         $employee->save(); //persist the data
-        return redirect()->route('employees.index')->with('info','Employee Updated Successfully');
+        return redirect()->route('parcels.index')->with('info','Employee Updated Successfully');
     }
 
     /**
@@ -94,8 +94,8 @@ class ParcelController extends Controller
      */
     public function destroy(Parcel $parcel)
     {
-        $employee = Employee::find($id);
-        $employee->delete();
-        return redirect()->route('employees.index');
+        $parcel = Parcel::find($id);
+        $parcel->delete();
+        return redirect()->route('parcels.index');
     }
 }

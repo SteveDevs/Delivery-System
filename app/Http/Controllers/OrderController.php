@@ -14,8 +14,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $parcels = Parcel::all();
-        return view('parcels.index',['parcels'=>$parcels]);
+        $orders = Order::all();
+        return view('orders.index',['orders'=>$orders]);
     }
 
     /**
@@ -25,7 +25,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('employees.create');
+        return view('order.create');
     }
 
     /**
@@ -36,10 +36,10 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $employee = new Employee();
-        $employee->firstname = $request->input('firstname');
-        $employee->lastname = $request->input('lastname');
-        $employee->department = $request->input('department');
+        $order = new Order();
+        $order->firstname = $request->input('firstname');
+        $order->lastname = $request->input('lastname');
+        $order->department = $request->input('department');
         $employee->phone = $request->input('phone');
         $employee->save();
         return redirect()->route('employees.index')->with('info','Employee Added Successfully');
@@ -53,7 +53,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        return view('order.order', ['order' => Order::findOrFail($id)]);
     }
 
     /**
@@ -64,8 +64,8 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        $employee = Employee::find($id);
-        return view('employee.edit',['employee'=> $employee]);
+        $order = Order::find($id);
+        return view('order.edit',['order'=> $order]);
     }
 
     /**
@@ -77,13 +77,13 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        $employee = Employee::find($request->input('id'));
-        $employee->firstname = $request->input('firstname');
-        $employee->lastname = $request->input('lastname');
-        $employee->department = $request->input('department');
+        $order = Order::find($request->input('id'));
+        $order->firstname = $request->input('firstname');
+        $order->lastname = $request->input('lastname');
+        $order->department = $request->input('department');
         $employee->phone = $request->input('phone');
         $employee->save(); //persist the data
-        return redirect()->route('employees.index')->with('info','Employee Updated Successfully');
+        return redirect()->route('orders.index')->with('info','Employee Updated Successfully');
     }
 
     /**

@@ -25,7 +25,7 @@ class DeliveryController extends Controller
      */
     public function create()
     {
-        return view('deliveries.create');
+        return view('delivery.create');
     }
 
     /**
@@ -42,7 +42,7 @@ class DeliveryController extends Controller
         $delivery->department = $request->input('department');
         $delivery->phone = $request->input('phone');
         $employee->save();
-        return redirect()->route('employees.index')->with('info','Employee Added Successfully');
+        return redirect()->route('deliveries.index')->with('info','Employee Added Successfully');
     }
 
     /**
@@ -53,7 +53,7 @@ class DeliveryController extends Controller
      */
     public function show(Delivery $delivery)
     {
-        //
+        return view('delivery.delivery', ['delivery' => Delivery::findOrFail($id)]);
     }
 
     /**
@@ -64,8 +64,8 @@ class DeliveryController extends Controller
      */
     public function edit(Delivery $delivery)
     {
-        $employee = Employee::find($id);
-        return view('employee.edit',['employee'=> $employee]);
+        $delivery = Delivery::find($id);
+        return view('delivery.edit',['delivery'=> $delivery]);
     }
 
     /**
@@ -77,13 +77,13 @@ class DeliveryController extends Controller
      */
     public function update(Request $request, Delivery $delivery)
     {
-        $employee = Employee::find($request->input('id'));
-        $employee->firstname = $request->input('firstname');
-        $employee->lastname = $request->input('lastname');
-        $employee->department = $request->input('department');
+        $delivery = Delivery::find($request->input('id'));
+        $delivery->firstname = $request->input('firstname');
+        $delivery->lastname = $request->input('lastname');
+        $delivery->department = $request->input('department');
         $employee->phone = $request->input('phone');
-        $employee->save(); //persist the data
-        return redirect()->route('employees.index')->with('info','Employee Updated Successfully');
+        $delivery->save(); //persist the data
+        return redirect()->route('deliveries.index')->with('info','Employee Updated Successfully');
     }
 
     /**

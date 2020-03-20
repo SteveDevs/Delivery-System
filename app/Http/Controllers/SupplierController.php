@@ -14,8 +14,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $parcels = Parcel::all();
-        return view('parcels.index',['parcels'=>$parcels]);
+        $suppliers = Supplier::all();
+        return view('suppliers.index',['suppliers'=>$suppliers]);
     }
 
     /**
@@ -25,7 +25,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('employees.create');
+        return view('supplier.create');
     }
 
     /**
@@ -36,13 +36,13 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        $employee = new Employee();
-        $employee->firstname = $request->input('firstname');
-        $employee->lastname = $request->input('lastname');
-        $employee->department = $request->input('department');
+        $supplier = new Supplier();
+        $supplier->firstname = $request->input('firstname');
+        $supplier->lastname = $request->input('lastname');
+        $supplier->department = $request->input('department');
         $employee->phone = $request->input('phone');
-        $employee->save();
-        return redirect()->route('employees.index')->with('info','Employee Added Successfully');
+        $Supplier->save();
+        return redirect()->route('suppliers.index')->with('info','Employee Added Successfully');
     }
 
     /**
@@ -53,7 +53,7 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        //
+        return view('Supplier.profile', ['Supplier' => Supplier::findOrFail($id)]);
     }
 
     /**
@@ -64,8 +64,8 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        $employee = Employee::find($id);
-        return view('employee.edit',['employee'=> $employee]);
+        $supplier = Supplier::find($id);
+        return view('supplier.edit',['supplier'=> $supplier]);
     }
 
     /**
@@ -77,13 +77,13 @@ class SupplierController extends Controller
      */
     public function update(Request $request, Supplier $supplier)
     {
-        $employee = Employee::find($request->input('id'));
-        $employee->firstname = $request->input('firstname');
-        $employee->lastname = $request->input('lastname');
-        $employee->department = $request->input('department');
+        $supplier = Supplier::find($request->input('id'));
+        $supplier->firstname = $request->input('firstname');
+        $supplier->lastname = $request->input('lastname');
+        $supplier->department = $request->input('department');
         $employee->phone = $request->input('phone');
         $employee->save(); //persist the data
-        return redirect()->route('employees.index')->with('info','Employee Updated Successfully');
+        return redirect()->route('supplier.index')->with('info','Employee Updated Successfully');
     }
 
     /**

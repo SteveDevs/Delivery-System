@@ -14,8 +14,8 @@ class HouseholdController extends Controller
      */
     public function index()
     {
-        $parcels = Parcel::all();
-        return view('parcels.index',['parcels'=>$parcels]);
+        $households = Household::all();
+        return view('households.index',['households'=>$households]);
     }
 
     /**
@@ -25,7 +25,7 @@ class HouseholdController extends Controller
      */
     public function create()
     {
-        return view('employees.create');
+        return view('household.create');
     }
 
     /**
@@ -36,10 +36,10 @@ class HouseholdController extends Controller
      */
     public function store(Request $request)
     {
-        $employee = new Employee();
-        $employee->firstname = $request->input('firstname');
-        $employee->lastname = $request->input('lastname');
-        $employee->department = $request->input('department');
+        $household = new Household();
+        $household->firstname = $request->input('firstname');
+        $household->lastname = $request->input('lastname');
+        $household->department = $request->input('department');
         $employee->phone = $request->input('phone');
         $employee->save();
         return redirect()->route('employees.index')->with('info','Employee Added Successfully');
@@ -53,7 +53,7 @@ class HouseholdController extends Controller
      */
     public function show(Household $household)
     {
-        //
+        return view('household.household', ['household' => Household::findOrFail($id)]);
     }
 
     /**
@@ -64,8 +64,8 @@ class HouseholdController extends Controller
      */
     public function edit(Household $household)
     {
-        $employee = Employee::find($id);
-        return view('employee.edit',['employee'=> $employee]);
+        $household = Household::find($id);
+        return view('household.edit',['household'=> $household]);
     }
 
     /**
@@ -77,13 +77,13 @@ class HouseholdController extends Controller
      */
     public function update(Request $request, Household $household)
     {
-        $employee = Employee::find($request->input('id'));
-        $employee->firstname = $request->input('firstname');
-        $employee->lastname = $request->input('lastname');
-        $employee->department = $request->input('department');
+        $household = Household::find($request->input('id'));
+        $household->firstname = $request->input('firstname');
+        $household->lastname = $request->input('lastname');
+        $household->department = $request->input('department');
         $employee->phone = $request->input('phone');
         $employee->save(); //persist the data
-        return redirect()->route('employees.index')->with('info','Employee Updated Successfully');
+        return redirect()->route('households.index')->with('info','Employee Updated Successfully');
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\pargonaught;
+use App\Pargonaught;
 use Illuminate\Http\Request;
 
 class PargonaughtController extends Controller
@@ -14,8 +14,8 @@ class PargonaughtController extends Controller
      */
     public function index()
     {
-        $parcels = Parcel::all();
-        return view('parcels.index',['parcels'=>$parcels]);
+        $pargonaughts = Pargonaught::all();
+        return view('pargonaughts.index',['pargonaughts'=>$pargonaughts]);
     }
 
     /**
@@ -25,7 +25,7 @@ class PargonaughtController extends Controller
      */
     public function create()
     {
-        //
+        return view('pargonaught.create');
     }
 
     /**
@@ -36,13 +36,13 @@ class PargonaughtController extends Controller
      */
     public function store(Request $request)
     {
-        $employee = new Employee();
-        $employee->firstname = $request->input('firstname');
-        $employee->lastname = $request->input('lastname');
-        $employee->department = $request->input('department');
+        $pargonaught = new Pargonaught();
+        $pargonaught->firstname = $request->input('firstname');
+        $pargonaught->lastname = $request->input('lastname');
+        $pargonaught->department = $request->input('department');
         $employee->phone = $request->input('phone');
         $employee->save();
-        return redirect()->route('employees.index')->with('info','Employee Added Successfully');
+        return redirect()->route('pargonaught.index')->with('info','Employee Added Successfully');
     }
 
     /**
@@ -51,9 +51,9 @@ class PargonaughtController extends Controller
      * @param  \App\pargonaught  $pargonaught
      * @return \Illuminate\Http\Response
      */
-    public function show(pargonaught $pargonaught)
+    public function show(Pargonaught $pargonaught)
     {
-        //
+        return view('pargonaught.profile', ['user' => User::findOrFail($id)]);
     }
 
     /**
@@ -62,10 +62,10 @@ class PargonaughtController extends Controller
      * @param  \App\pargonaught  $pargonaught
      * @return \Illuminate\Http\Response
      */
-    public function edit(pargonaught $pargonaught)
+    public function edit(Pargonaught $pargonaught)
     {
-        $employee = Employee::find($id);
-        return view('employee.edit',['employee'=> $employee]);
+        $pargonaught = Pargonaught::find($id);
+        return view('pargonaught.edit',['pargonaught'=> $pargonaught]);
     }
 
     /**
@@ -77,10 +77,10 @@ class PargonaughtController extends Controller
      */
     public function update(Request $request, pargonaught $pargonaught)
     {
-        $employee = Employee::find($request->input('id'));
-        $employee->firstname = $request->input('firstname');
-        $employee->lastname = $request->input('lastname');
-        $employee->department = $request->input('department');
+        $pargonaught = Pargonaught::find($request->input('id'));
+        $pargonaught->firstname = $request->input('firstname');
+        $pargonaught->lastname = $request->input('lastname');
+        $pargonaught->department = $request->input('department');
         $employee->phone = $request->input('phone');
         $employee->save(); //persist the data
         return redirect()->route('employees.index')->with('info','Employee Updated Successfully');
