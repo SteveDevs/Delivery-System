@@ -11,19 +11,19 @@
             {{-- Left Side Of Navbar --}}
             <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-            <a href="{{ url('/pargonaughts') }}">Pargonaughts</a>
+            <a class="nav-link" href="{{ url('/pargonaughts') }}">Pargonaughts</a>
             </li>
             <li class="nav-item">
-            <a href="{{ url('/deliveries') }}">Deliveries</a>
+            <a class="nav-link" href="{{ url('/deliveries') }}">Deliveries</a>
             </li>
             <li class="nav-item">
-            <a href="{{ url('/orders') }}">Orders</a>
+            <a class="nav-link" href="{{ url('/orders') }}">Orders</a>
             </li>
             <li class="nav-item">
-            <a href="{{ url('/households') }}">Households</a>
+            <a class="nav-link" href="{{ url('/households') }}">Households</a>
             </li>
             <li class="nav-item">
-            <a href="{{ url('/parcels') }}">Parcels</a>
+            <a class="nav-link" href="{{ url('/parcels') }}">Parcels</a>
             </li>
             </ul>
             {{-- Right Side Of Navbar --}}

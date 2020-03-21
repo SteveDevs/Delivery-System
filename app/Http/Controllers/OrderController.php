@@ -15,7 +15,8 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::all();
-        return view('pages.orders.index',['orders'=>$orders]);
+        $search_route = 'search-orders';
+        return view('pages.orders.index',['orders'=>$orders, 'search_route'=>$search_route]);
     }
 
     /**
@@ -37,9 +38,8 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $order = new Order();
-        $order->household_id = $request->input('household_id');
         $order->save();
-        return redirect()->route('pages.orders.index')->with('info','Employee Added Successfully');
+        return redirect()->route('orders.index')->with('info','Order Added Successfully');
     }
 
     /**
@@ -61,7 +61,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        $order = Order::find($order->id);
+        $order::find($order->id);
         return view('pages.orders.order.edit',['order'=> $order]);
     }
 
@@ -74,8 +74,8 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        $order = Order::find($request->input('id'));
-        $order->household_id = $request->input('household_id');
+        $order::find($request->id);
+        $order->household_id = $request->household_id;
         $order->save(); //persist the data
         return redirect()->route('pages.orders.index')->with('info','Order Updated Successfully');
     }

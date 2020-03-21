@@ -41,7 +41,7 @@ class DeliveryController extends Controller
         $delivery->courier = $request->courier;
         $delivery->capacity = $request->capacity;
         $delivery->save();
-        return redirect()->route('deliveries.index')->with('info','Employee Added Successfully');
+        return redirect()->route('deliveries.index')->with('info','Delivery Added Successfully');
     }
 
     /**
@@ -52,7 +52,7 @@ class DeliveryController extends Controller
      */
     public function show(Delivery $delivery)
     {
-        return view('pages.deliveries.delivery.delivery', ['delivery' => Delivery::findOrFail($id)]);
+        return view('pages.deliveries.delivery.delivery', ['delivery' => delivery::findOrFail($delivery->id)]);
     }
 
     /**
@@ -63,7 +63,7 @@ class DeliveryController extends Controller
      */
     public function edit(Delivery $delivery)
     {
-        $delivery = Delivery::find($delivery->id);
+        $delivery::find($delivery->id);
         return view('pages.deliveries.delivery.edit',['delivery'=> $delivery]);
     }
 
@@ -76,7 +76,9 @@ class DeliveryController extends Controller
      */
     public function update(Request $request, Delivery $delivery)
     {
-        $delivery = Delivery::find($request->input('id'));
+        $delivery::find($request->id);
+        $delivery->courier = $request->courier;
+        $delivery->capacity = $request->capacity;
         $delivery->save(); //persist the data
         return redirect()->route('deliveries.index')->with('info','Employee Updated Successfully');
     }

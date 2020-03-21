@@ -15,7 +15,8 @@ class HouseholdController extends Controller
     public function index()
     {
         $households = Household::all();
-        return view('pages.households.index',['households'=>$households]);
+        $search_route = 'search-households';
+        return view('pages.households.index',['households'=>$households, 'search_route'=>$search_route]);
     }
 
     /**
@@ -37,9 +38,9 @@ class HouseholdController extends Controller
     public function store(Request $request)
     {
         $household = new Household();
-        $household->name = $request->input('name');
-        $employee->save();
-        return redirect()->route('pages.households.index')->with('info','Household Added Successfully');
+        $household->name = $request->name;
+        $household->save();
+        return redirect()->route('households.index')->with('info','Household Added Successfully');
     }
 
     /**
@@ -50,7 +51,7 @@ class HouseholdController extends Controller
      */
     public function show(Household $household)
     {
-        return view('pages.households.household.household', ['household' => Household::findOrFail($id)]);
+        return view('pages.households.household.household', ['household' => $household::findOrFail($id)]);
     }
 
     /**
@@ -61,7 +62,7 @@ class HouseholdController extends Controller
      */
     public function edit(Household $household)
     {
-        $household = Household::find($household->id);
+        $household::find($household->id);
         return view('pages.households.household.edit',['household'=> $household]);
     }
 
@@ -74,7 +75,7 @@ class HouseholdController extends Controller
      */
     public function update(Request $request, Household $household)
     {
-        $household = Household::find($request->input('id'));
+        $household::find($request->id);
         $household->name = $request->input('name');
         $household->save(); //persist the data
         return redirect()->route('pages.households.index')->with('info','Household Updated Successfully');

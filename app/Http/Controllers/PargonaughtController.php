@@ -15,7 +15,8 @@ class PargonaughtController extends Controller
     public function index()
     {
         $pargonaughts = Pargonaught::all();
-        return view('pages.pargonaughts.index',['pargonaughts'=>$pargonaughts]);
+        $search_route = 'search-pargonaughts';
+        return view('pages.pargonaughts.index',['pargonaughts'=>$pargonaughts, 'search_route'=>$search_route]);
     }
 
     /**
@@ -37,12 +38,10 @@ class PargonaughtController extends Controller
     public function store(Request $request)
     {
         $pargonaught = new Pargonaught();
-        $pargonaught->firstname = $request->input('firstname');
-        $pargonaught->lastname = $request->input('lastname');
-        $pargonaught->department = $request->input('department');
-        $employee->phone = $request->input('phone');
-        $employee->save();
-        return redirect()->route('pages.pargonaughts.index')->with('info','Employee Added Successfully');
+        $pargonaught->name = $request->name;
+        $pargonaught->status = $request->status;
+        $pargonaught->save();
+        return redirect()->route('pargonaughts.index')->with('info','Pargonaught Added Successfully');
     }
 
     /**
@@ -53,7 +52,7 @@ class PargonaughtController extends Controller
      */
     public function show(Pargonaught $pargonaught)
     {
-        return view('pages.pargonaughts.pargonaught.pargonaught', ['user' => User::findOrFail($id)]);
+        return view('pages.pargonaughts.pargonaught.pargonaught', ['user' => $pargonaught::findOrFail($id)]);
     }
 
     /**
@@ -64,7 +63,7 @@ class PargonaughtController extends Controller
      */
     public function edit(Pargonaught $pargonaught)
     {
-        $pargonaught = Pargonaught::find($pargonaught->id);
+        $pargonaught::find($pargonaught->id);
         return view('pages.pargonaughts.pargonaught.edit',['pargonaught'=> $pargonaught]);
     }
 
@@ -77,11 +76,11 @@ class PargonaughtController extends Controller
      */
     public function update(Request $request, pargonaught $pargonaught)
     {
-        $pargonaught = Pargonaught::find($request->input('id'));
-        $pargonaught->status = $request->input('status');
-        $pargonaught->name = $request->input('name');
+        $pargonaught::find($request->input('id'));
+        $pargonaught->status = $request->status;
+        $pargonaught->name = $request->name;
         $pargonaught->save(); //persist the data
-        return redirect()->route('pages.pargonaughts.index')->with('info','Employee Updated Successfully');
+        return redirect()->route('pages.pargonaughts.index')->with('info','Pargonaught Updated Successfully');
     }
 
     /**

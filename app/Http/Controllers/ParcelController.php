@@ -15,7 +15,8 @@ class ParcelController extends Controller
     public function index()
     {
         $parcels = Parcel::all();
-        return view('pages.parcels.index',['parcels'=>$parcels]);
+        $search_route = 'search-parcels';
+        return view('pages.parcels.index',['parcels'=>$parcels, 'search_route'=>$search_route]);
     }
 
     /**
@@ -36,11 +37,12 @@ class ParcelController extends Controller
      */
     public function store(Request $request)
     {
-        $parcel = new Parcel();
-        $parcel->location = $request->input('firstname');
-        $parcel->discarded = $request->input('lastname');
-        $parcel->save();
-        return redirect()->route('pages.parcels.index')->with('info','Parcel Added Successfully');
+        $parcels = new Parcel();
+        $parcels->location = $request->courier;
+        $parcels->discarded = $request->capacity;
+        $parcels->payment_amount = $request->payment_amount;
+        $parcels->save();
+        return redirect()->route('parcels.index')->with('info','Parcel Added Successfully');
     }
 
     /**
@@ -75,9 +77,9 @@ class ParcelController extends Controller
      */
     public function update(Request $request, Parcel $parcel)
     {
-        $parcel = Parcel::find($request->input('id'));
-        $parcel->location = $request->input('location');
-        $parcel->discarded = $request->input('discarded');
+        $parcel::find($request->input('id'));
+        $parcel->location = $request->location;
+        $parcel->discarded = $request->discarded;
         $parcel->save(); //persist the data
         return redirect()->route('pages.parcels.index')->with('info','Employee Updated Successfully');
     }
@@ -90,7 +92,7 @@ class ParcelController extends Controller
      */
     public function destroy(Parcel $parcel)
     {
-        $parcel = Parcel::find($id);
+        $parcel::find($id);
         $parcel->delete();
         return redirect()->route('pages.parcels.index');
     }

@@ -14,8 +14,9 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = Supplier::all();
-        return view('pages.suppliers.index',['suppliers'=>$suppliers]);
+        $deliveries = Delivery::all();
+        $search_route = 'search-deliveries';
+        return view('pages.deliveries.index',['deliveries'=>$deliveries, 'search_route'=>$search_route]);
     }
 
     /**
@@ -36,10 +37,11 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        $supplier = new Supplier();
-        $supplier->name = $request->input('name');
-        $Supplier->save();
-        return redirect()->route('pages.suppliers.index')->with('info','Employee Added Successfully');
+        $delivery = new Delivery();
+        $delivery->courier = $request->courier;
+        $delivery->capacity = $request->capacity;
+        $delivery->save();
+        return redirect()->route('deliveries.index')->with('info','Delivery Added Successfully');
     }
 
     /**

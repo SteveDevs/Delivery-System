@@ -23,14 +23,19 @@ Auth::routes();
 Route::resource('deliveries', 'DeliveryController');
 Route::post('search-deliveries', 'DeliveryController@search')->name('search-deliveries');
 
-Route::resource('households', 'HouseHoldController');
+Route::resource('households', 'HouseholdController');
+Route::post('search-households', 'HouseholdController@search')->name('search-households');
 
 Route::resource('orders', 'OrderController');
+Route::post('search-orders', 'DeliveryController@search')->name('search-orders');
 
 Route::resource('parcels', 'ParcelController');
+Route::post('search-parcels', 'ParcelController@search')->name('search-parcels');
 
 Route::resource('pargonaughts', 'PargonaughtController');
+Route::post('search-pargonaughts', 'PargonaughtController@search')->name('search-pargonaughts');
 
 Route::resource('suppliers', 'SupplierController');
+Route::post('search-suppliers', 'SupplierController@search')->name('search-suppliers');
 
 Route::get('/home', 'HomeController@index')->name('home');
