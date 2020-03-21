@@ -15,6 +15,8 @@ class CreateDeliveriesTable extends Migration
     {
         Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
+            $table->string('courier');
+            $table->integer('capacity')->default(50);
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::all();
-        return view('orders.index',['orders'=>$orders]);
+        return view('pages.orders.index',['orders'=>$orders]);
     }
 
     /**
@@ -25,7 +25,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('order.create');
+        return view('pages.orders.order.create');
     }
 
     /**
@@ -37,12 +37,9 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $order = new Order();
-        $order->firstname = $request->input('firstname');
-        $order->lastname = $request->input('lastname');
-        $order->department = $request->input('department');
-        $employee->phone = $request->input('phone');
-        $employee->save();
-        return redirect()->route('employees.index')->with('info','Employee Added Successfully');
+        $order->household_id = $request->input('household_id');
+        $order->save();
+        return redirect()->route('pages.orders.index')->with('info','Employee Added Successfully');
     }
 
     /**
@@ -53,7 +50,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return view('order.order', ['order' => Order::findOrFail($id)]);
+        return view('pages.orders.order.order', ['order' => Order::findOrFail($id)]);
     }
 
     /**
@@ -64,8 +61,8 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        $order = Order::find($id);
-        return view('order.edit',['order'=> $order]);
+        $order = Order::find($order->id);
+        return view('pages.orders.order.edit',['order'=> $order]);
     }
 
     /**
@@ -78,12 +75,9 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $order = Order::find($request->input('id'));
-        $order->firstname = $request->input('firstname');
-        $order->lastname = $request->input('lastname');
-        $order->department = $request->input('department');
-        $employee->phone = $request->input('phone');
-        $employee->save(); //persist the data
-        return redirect()->route('orders.index')->with('info','Employee Updated Successfully');
+        $order->household_id = $request->input('household_id');
+        $order->save(); //persist the data
+        return redirect()->route('pages.orders.index')->with('info','Order Updated Successfully');
     }
 
     /**
@@ -95,5 +89,50 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    /**
+     * Method to search the users.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search_box');
+        $searchRules = [
+            'search_box' => 'required|string|max:255',
+        ];
+        $searchMessages = [
+            'search_box.required' => 'Search term is required',
+            'search_box.string'   => 'Search term has invalid characters',
+            'search_box.max'      => 'Search term has too many characters - 255 allowed',
+        ];
+
+        $validator = Validator::make($request->all(), $searchRules, $searchMessages);
+
+        if ($validator->fails()) {
+            return response()->json([
+                json_encode($validator),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $results = Delivery::where('id', 'like', $searchTerm.'%')
+                            ->orWhere('courier', 'like', $searchTerm.'%')
+                            ->orWhere('capacity', 'like', $searchTerm.'%')->get();
+
+        // Attach roles to results
+        foreach ($results as $result) {
+            $data = [
+                'courier' => $result->courier,
+                'capacity' => $result->capacity,
+            ];
+            $result->push($roles);
+        }
+
+        return response()->json([
+            json_encode($results),
+        ], Response::HTTP_OK);
     }
 }

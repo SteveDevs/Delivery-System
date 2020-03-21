@@ -15,7 +15,7 @@ class PargonaughtController extends Controller
     public function index()
     {
         $pargonaughts = Pargonaught::all();
-        return view('pargonaughts.index',['pargonaughts'=>$pargonaughts]);
+        return view('pages.pargonaughts.index',['pargonaughts'=>$pargonaughts]);
     }
 
     /**
@@ -25,7 +25,7 @@ class PargonaughtController extends Controller
      */
     public function create()
     {
-        return view('pargonaught.create');
+        return view('pages.pargonaughts.pargonaught.create');
     }
 
     /**
@@ -42,7 +42,7 @@ class PargonaughtController extends Controller
         $pargonaught->department = $request->input('department');
         $employee->phone = $request->input('phone');
         $employee->save();
-        return redirect()->route('pargonaught.index')->with('info','Employee Added Successfully');
+        return redirect()->route('pages.pargonaughts.index')->with('info','Employee Added Successfully');
     }
 
     /**
@@ -53,7 +53,7 @@ class PargonaughtController extends Controller
      */
     public function show(Pargonaught $pargonaught)
     {
-        return view('pargonaught.profile', ['user' => User::findOrFail($id)]);
+        return view('pages.pargonaughts.pargonaught.pargonaught', ['user' => User::findOrFail($id)]);
     }
 
     /**
@@ -64,8 +64,8 @@ class PargonaughtController extends Controller
      */
     public function edit(Pargonaught $pargonaught)
     {
-        $pargonaught = Pargonaught::find($id);
-        return view('pargonaught.edit',['pargonaught'=> $pargonaught]);
+        $pargonaught = Pargonaught::find($pargonaught->id);
+        return view('pages.pargonaughts.pargonaught.edit',['pargonaught'=> $pargonaught]);
     }
 
     /**
@@ -78,12 +78,10 @@ class PargonaughtController extends Controller
     public function update(Request $request, pargonaught $pargonaught)
     {
         $pargonaught = Pargonaught::find($request->input('id'));
-        $pargonaught->firstname = $request->input('firstname');
-        $pargonaught->lastname = $request->input('lastname');
-        $pargonaught->department = $request->input('department');
-        $employee->phone = $request->input('phone');
-        $employee->save(); //persist the data
-        return redirect()->route('employees.index')->with('info','Employee Updated Successfully');
+        $pargonaught->status = $request->input('status');
+        $pargonaught->name = $request->input('name');
+        $pargonaught->save(); //persist the data
+        return redirect()->route('pages.pargonaughts.index')->with('info','Employee Updated Successfully');
     }
 
     /**
@@ -95,5 +93,50 @@ class PargonaughtController extends Controller
     public function destroy(pargonaught $pargonaught)
     {
         //
+    }
+
+    /**
+     * Method to search the users.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search_box');
+        $searchRules = [
+            'search_box' => 'required|string|max:255',
+        ];
+        $searchMessages = [
+            'search_box.required' => 'Search term is required',
+            'search_box.string'   => 'Search term has invalid characters',
+            'search_box.max'      => 'Search term has too many characters - 255 allowed',
+        ];
+
+        $validator = Validator::make($request->all(), $searchRules, $searchMessages);
+
+        if ($validator->fails()) {
+            return response()->json([
+                json_encode($validator),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $results = Delivery::where('id', 'like', $searchTerm.'%')
+                            ->orWhere('courier', 'like', $searchTerm.'%')
+                            ->orWhere('capacity', 'like', $searchTerm.'%')->get();
+
+        // Attach roles to results
+        foreach ($results as $result) {
+            $data = [
+                'courier' => $result->courier,
+                'capacity' => $result->capacity,
+            ];
+            $result->push($roles);
+        }
+
+        return response()->json([
+            json_encode($results),
+        ], Response::HTTP_OK);
     }
 }

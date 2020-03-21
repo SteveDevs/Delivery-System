@@ -15,7 +15,8 @@ class DeliveryController extends Controller
     public function index()
     {
         $deliveries = Delivery::all();
-        return view('parcels.index',['deliveries'=>$deliveries]);
+        $search_route = 'search-deliveries';
+        return view('pages.deliveries.index',['deliveries'=>$deliveries, 'search_route'=>$search_route]);
     }
 
     /**
@@ -25,7 +26,7 @@ class DeliveryController extends Controller
      */
     public function create()
     {
-        return view('delivery.create');
+        return view('pages.deliveries.delivery.create');
     }
 
     /**
@@ -37,11 +38,9 @@ class DeliveryController extends Controller
     public function store(Request $request)
     {
         $delivery = new Delivery();
-        $delivery->firstname = $request->input('firstname');
-        $delivery->lastname = $request->input('lastname');
-        $delivery->department = $request->input('department');
-        $delivery->phone = $request->input('phone');
-        $employee->save();
+        $delivery->courier = $request->courier;
+        $delivery->capacity = $request->capacity;
+        $delivery->save();
         return redirect()->route('deliveries.index')->with('info','Employee Added Successfully');
     }
 
@@ -53,7 +52,7 @@ class DeliveryController extends Controller
      */
     public function show(Delivery $delivery)
     {
-        return view('delivery.delivery', ['delivery' => Delivery::findOrFail($id)]);
+        return view('pages.deliveries.delivery.delivery', ['delivery' => Delivery::findOrFail($id)]);
     }
 
     /**
@@ -64,8 +63,8 @@ class DeliveryController extends Controller
      */
     public function edit(Delivery $delivery)
     {
-        $delivery = Delivery::find($id);
-        return view('delivery.edit',['delivery'=> $delivery]);
+        $delivery = Delivery::find($delivery->id);
+        return view('pages.deliveries.delivery.edit',['delivery'=> $delivery]);
     }
 
     /**
@@ -78,10 +77,6 @@ class DeliveryController extends Controller
     public function update(Request $request, Delivery $delivery)
     {
         $delivery = Delivery::find($request->input('id'));
-        $delivery->firstname = $request->input('firstname');
-        $delivery->lastname = $request->input('lastname');
-        $delivery->department = $request->input('department');
-        $employee->phone = $request->input('phone');
         $delivery->save(); //persist the data
         return redirect()->route('deliveries.index')->with('info','Employee Updated Successfully');
     }
@@ -95,5 +90,50 @@ class DeliveryController extends Controller
     public function destroy(Delivery $delivery)
     {
         //
+    }
+
+     /**
+     * Method to search the users.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search_box');
+        $searchRules = [
+            'search_box' => 'required|string|max:255',
+        ];
+        $searchMessages = [
+            'search_box.required' => 'Search term is required',
+            'search_box.string'   => 'Search term has invalid characters',
+            'search_box.max'      => 'Search term has too many characters - 255 allowed',
+        ];
+
+        $validator = Validator::make($request->all(), $searchRules, $searchMessages);
+
+        if ($validator->fails()) {
+            return response()->json([
+                json_encode($validator),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $results = Delivery::where('id', 'like', $searchTerm.'%')
+                            ->orWhere('courier', 'like', $searchTerm.'%')
+                            ->orWhere('capacity', 'like', $searchTerm.'%')->get();
+
+        // Attach roles to results
+        foreach ($results as $result) {
+            $data = [
+                'courier' => $result->courier,
+                'capacity' => $result->capacity,
+            ];
+            $result->push($data);
+        }
+
+        return response()->json([
+            json_encode($results),
+        ], Response::HTTP_OK);
     }
 }

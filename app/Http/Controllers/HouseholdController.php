@@ -15,7 +15,7 @@ class HouseholdController extends Controller
     public function index()
     {
         $households = Household::all();
-        return view('households.index',['households'=>$households]);
+        return view('pages.households.index',['households'=>$households]);
     }
 
     /**
@@ -25,7 +25,7 @@ class HouseholdController extends Controller
      */
     public function create()
     {
-        return view('household.create');
+        return view('pages.households.household.create');
     }
 
     /**
@@ -37,12 +37,9 @@ class HouseholdController extends Controller
     public function store(Request $request)
     {
         $household = new Household();
-        $household->firstname = $request->input('firstname');
-        $household->lastname = $request->input('lastname');
-        $household->department = $request->input('department');
-        $employee->phone = $request->input('phone');
+        $household->name = $request->input('name');
         $employee->save();
-        return redirect()->route('employees.index')->with('info','Employee Added Successfully');
+        return redirect()->route('pages.households.index')->with('info','Household Added Successfully');
     }
 
     /**
@@ -53,7 +50,7 @@ class HouseholdController extends Controller
      */
     public function show(Household $household)
     {
-        return view('household.household', ['household' => Household::findOrFail($id)]);
+        return view('pages.households.household.household', ['household' => Household::findOrFail($id)]);
     }
 
     /**
@@ -64,8 +61,8 @@ class HouseholdController extends Controller
      */
     public function edit(Household $household)
     {
-        $household = Household::find($id);
-        return view('household.edit',['household'=> $household]);
+        $household = Household::find($household->id);
+        return view('pages.households.household.edit',['household'=> $household]);
     }
 
     /**
@@ -78,12 +75,9 @@ class HouseholdController extends Controller
     public function update(Request $request, Household $household)
     {
         $household = Household::find($request->input('id'));
-        $household->firstname = $request->input('firstname');
-        $household->lastname = $request->input('lastname');
-        $household->department = $request->input('department');
-        $employee->phone = $request->input('phone');
-        $employee->save(); //persist the data
-        return redirect()->route('households.index')->with('info','Employee Updated Successfully');
+        $household->name = $request->input('name');
+        $household->save(); //persist the data
+        return redirect()->route('pages.households.index')->with('info','Household Updated Successfully');
     }
 
     /**
@@ -95,5 +89,50 @@ class HouseholdController extends Controller
     public function destroy(Household $household)
     {
         //
+    }
+
+    /**
+     * Method to search the users.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search_box');
+        $searchRules = [
+            'search_box' => 'required|string|max:255',
+        ];
+        $searchMessages = [
+            'search_box.required' => 'Search term is required',
+            'search_box.string'   => 'Search term has invalid characters',
+            'search_box.max'      => 'Search term has too many characters - 255 allowed',
+        ];
+
+        $validator = Validator::make($request->all(), $searchRules, $searchMessages);
+
+        if ($validator->fails()) {
+            return response()->json([
+                json_encode($validator),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $results = Delivery::where('id', 'like', $searchTerm.'%')
+                            ->orWhere('courier', 'like', $searchTerm.'%')
+                            ->orWhere('capacity', 'like', $searchTerm.'%')->get();
+
+        // Attach roles to results
+        foreach ($results as $result) {
+            $data = [
+                'courier' => $result->courier,
+                'capacity' => $result->capacity,
+            ];
+            $result->push($roles);
+        }
+
+        return response()->json([
+            json_encode($results),
+        ], Response::HTTP_OK);
     }
 }

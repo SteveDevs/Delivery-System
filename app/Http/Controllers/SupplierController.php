@@ -15,7 +15,7 @@ class SupplierController extends Controller
     public function index()
     {
         $suppliers = Supplier::all();
-        return view('suppliers.index',['suppliers'=>$suppliers]);
+        return view('pages.suppliers.index',['suppliers'=>$suppliers]);
     }
 
     /**
@@ -25,7 +25,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('supplier.create');
+        return view('pages.suppliers.supplier.create');
     }
 
     /**
@@ -37,12 +37,9 @@ class SupplierController extends Controller
     public function store(Request $request)
     {
         $supplier = new Supplier();
-        $supplier->firstname = $request->input('firstname');
-        $supplier->lastname = $request->input('lastname');
-        $supplier->department = $request->input('department');
-        $employee->phone = $request->input('phone');
+        $supplier->name = $request->input('name');
         $Supplier->save();
-        return redirect()->route('suppliers.index')->with('info','Employee Added Successfully');
+        return redirect()->route('pages.suppliers.index')->with('info','Employee Added Successfully');
     }
 
     /**
@@ -53,7 +50,7 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        return view('Supplier.profile', ['Supplier' => Supplier::findOrFail($id)]);
+        return view('pages.suppliers.supplier.supplier', ['Supplier' => Supplier::findOrFail($id)]);
     }
 
     /**
@@ -64,8 +61,8 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        $supplier = Supplier::find($id);
-        return view('supplier.edit',['supplier'=> $supplier]);
+        $supplier = Supplier::find($supplier->id);
+        return view('pages.suppliers.supplier.edit',['supplier'=> $supplier]);
     }
 
     /**
@@ -78,12 +75,9 @@ class SupplierController extends Controller
     public function update(Request $request, Supplier $supplier)
     {
         $supplier = Supplier::find($request->input('id'));
-        $supplier->firstname = $request->input('firstname');
-        $supplier->lastname = $request->input('lastname');
-        $supplier->department = $request->input('department');
-        $employee->phone = $request->input('phone');
-        $employee->save(); //persist the data
-        return redirect()->route('supplier.index')->with('info','Employee Updated Successfully');
+        $supplier->name = $request->input('name');
+        $supplier->save(); //persist the data
+        return redirect()->route('pages.suppliers.index')->with('info','Employee Updated Successfully');
     }
 
     /**
@@ -95,5 +89,50 @@ class SupplierController extends Controller
     public function destroy(Supplier $supplier)
     {
         //
+    }
+
+    /**
+     * Method to search the users.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search_box');
+        $searchRules = [
+            'search_box' => 'required|string|max:255',
+        ];
+        $searchMessages = [
+            'search_box.required' => 'Search term is required',
+            'search_box.string'   => 'Search term has invalid characters',
+            'search_box.max'      => 'Search term has too many characters - 255 allowed',
+        ];
+
+        $validator = Validator::make($request->all(), $searchRules, $searchMessages);
+
+        if ($validator->fails()) {
+            return response()->json([
+                json_encode($validator),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $results = Delivery::where('id', 'like', $searchTerm.'%')
+                            ->orWhere('courier', 'like', $searchTerm.'%')
+                            ->orWhere('capacity', 'like', $searchTerm.'%')->get();
+
+        // Attach roles to results
+        foreach ($results as $result) {
+            $data = [
+                'courier' => $result->courier,
+                'capacity' => $result->capacity,
+            ];
+            $result->push($roles);
+        }
+
+        return response()->json([
+            json_encode($results),
+        ], Response::HTTP_OK);
     }
 }

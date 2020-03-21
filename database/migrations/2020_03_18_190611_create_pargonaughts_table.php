@@ -28,6 +28,6 @@ class CreatePargonaughtsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pargonaughts');
+        Schema::dropIfExists('pargo_naughts');
     }
 }
