@@ -52,14 +52,15 @@
 
                     <div class="card-body">
                         @include('partials.search-form')
-                        <div class="table-responsive data-table">
+                        <div class="table-responsive data-table-div">
                             <table class="table table-striped table-sm data-table">
                                 <caption id="count">
                                     
                                 </caption>
                                 <thead class="thead">
                                     <tr>
-                                        <th>Location</th>
+                                        <th>Name</th>
+                                        <th>Status</th>
                                         <th>Discarded</th>
                                         <th>Payment Amount</th>
                                         <th>Actions</th>
@@ -72,9 +73,11 @@
                                     @foreach($parcels as $parcel)
 
                                         <tr>
-                                            <td class="hidden-xs">{{$parcel->location}}</td>
+                                        <td class="hidden-xs">{{ $parcel->name }}</td>
                                             </td>
-                                            <td class="hidden-xs">{{$parcel->discarded}}</td>
+                                            <td class="hidden-xs">{{$statuses[$parcel->status]}}</td>
+                                            </td>
+                                            <td class="hidden-xs">{{$yes_no[$parcel->discarded]}}</td>
                                             </td>
                                             <td class="hidden-xs">{{$parcel->payment_amount}}</td>
                                             </td>

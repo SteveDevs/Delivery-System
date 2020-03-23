@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Delivery;
+use App\Pargonaught;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DeliveryController extends Controller
 {
+    private $STATUS = [
+        '0' => 'Awaiting parcels',
+        '1' => 'Delivering parcels',
+        '2' => 'Delivered parcels'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +23,7 @@ class DeliveryController extends Controller
     {
         $deliveries = Delivery::all();
         $search_route = 'search-deliveries';
-        return view('pages.deliveries.index',['deliveries'=>$deliveries, 'search_route'=>$search_route]);
+        return view('pages.deliveries.index',['deliveries'=>$deliveries, 'search_route'=>$search_route, 'statuses'=>$this->STATUS]);
     }
 
     /**
@@ -137,5 +144,22 @@ class DeliveryController extends Controller
         return response()->json([
             json_encode($results),
         ], Response::HTTP_OK);
+    }
+
+    public function show_assign_pargonaughts($id){
+        $pargonaughts = Pargonaught::where('status', '1')->get();
+        $parcels = DB::table('deliveries')
+            ->join('delivery_parcels', 'deliveries.id', '=', 'delivery_parcels.delivery_id')
+            ->join('parcels', 'delivery_parcels.parcel_id', '=', 'parcels.id')
+            ->where('deliveries.id', '=', $id)
+            ->get(); 
+        return view('pages.deliveries.delivery.assign-pargonaughts',['pargonaughts' => $pargonaughts, 'delivery_id' => $id, 'parcels' => $parcels]);
+    }
+
+    public function assign_pargonaughts(Request $request, $delivery_id){
+        foreach($request as $key => $value){
+           
+        }
+        return redirect()->route('deliveries.index')->with('info','Employee Updated Successfully');
     }
 }

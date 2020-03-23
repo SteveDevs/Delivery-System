@@ -22,6 +22,9 @@ Auth::routes();
 
 Route::resource('deliveries', 'DeliveryController');
 Route::post('search-deliveries', 'DeliveryController@search')->name('search-deliveries');
+//assign_pargonaughts
+Route::get('show-assign-pargonaughts/{id}', 'DeliveryController@show_assign_pargonaughts')->name('show-assign-pargonaughts');;
+Route::post('assign-pargonaughts', 'DeliveryController@assign_pargonaughts')->name('assign-pargonaughts');
 
 Route::resource('households', 'HouseholdController');
 Route::post('search-households', 'HouseholdController@search')->name('search-households');

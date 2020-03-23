@@ -52,7 +52,7 @@
 
                     <div class="card-body">
                         @include('partials.search-form')
-                        <div class="table-responsive data-table">
+                        <div class="table-responsive data-table-div">
                             <table class="table table-striped table-sm data-table">
                                 <caption id="count">
                                     
@@ -69,11 +69,10 @@
                                 <tbody id="table-data">
                                 
                                     @foreach($pargonaughts as $pargonaught)
-
                                         <tr>
                                             <td class="hidden-xs">{{$pargonaught->name}}</td>
                                             </td>
-                                            <td class="hidden-xs">{{$pargonaught->status}}</td>
+                                            <td class="hidden-xs">{{$statuses[$pargonaught->status]}}</td>
                                             </td>
                                             <td>
                                                 <a class="btn btn-sm btn-success btn-block" href="{{ URL::to('pargonaughts/' . $pargonaught->id) }}" data-toggle="tooltip" title="Show">

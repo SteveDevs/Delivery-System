@@ -12,7 +12,8 @@ class ParcelTableSeeder extends Seeder
     public function run()
     {
         DB::table('parcels')->insert([
-            'location' => 1,
+            'name' => 'parcel1',
+            'status' => 1,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -20,7 +21,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 2,
+            'name' => 'parcel2',
+            'status' => 2,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -28,7 +30,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 3,
+            'name' => 'parcel3',
+            'status' => 3,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -36,7 +39,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 1,
+            'name' => 'parcel4',
+            'status' => 1,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -44,7 +48,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 2,
+            'name' => 'parcel5',
+            'status' => 2,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -52,7 +57,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 3,
+            'name' => 'parcel6',
+            'status' => 3,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -60,7 +66,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 1,
+            'name' => 'parcel7',
+            'status' => 1,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -68,7 +75,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 2,
+            'name' => 'parcel8',
+            'status' => 2,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -76,7 +84,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 3,
+            'name' => 'parcel9',
+            'status' => 3,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -84,7 +93,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 1,
+            'name' => 'parcel10',
+            'status' => 1,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -92,7 +102,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 2,
+            'name' => 'parcel11',
+            'status' => 2,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -100,7 +111,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 3,
+            'name' => 'parcel12',
+            'status' => 3,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -108,7 +120,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 1,
+            'name' => 'parcel13',
+            'status' => 1,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -116,7 +129,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 2,
+            'name' => 'parcel14',
+            'status' => 2,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -124,7 +138,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 3,
+            'name' => 'parcel15',
+            'status' => 3,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -132,7 +147,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 1,
+            'name' => 'parcel16',
+            'status' => 1,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -140,7 +156,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 2,
+            'name' => 'parcel17',
+            'status' => 2,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -148,7 +165,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 3,
+            'name' => 'parcel18',
+            'status' => 3,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -156,7 +174,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 1,
+            'name' => 'parcel19',
+            'status' => 1,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -164,7 +183,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 2,
+            'name' => 'parcel20',
+            'status' => 2,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -172,7 +192,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 3,
+            'name' => 'parcel21',
+            'status' => 3,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -180,7 +201,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 1,
+            'name' => 'parcel22',
+            'status' => 1,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -188,7 +210,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 2,
+            'name' => 'parcel23',
+            'status' => 2,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -196,7 +219,8 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 3,
+            'name' => 'parcel24',
+            'status' => 3,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),
@@ -204,7 +228,9 @@ class ParcelTableSeeder extends Seeder
         ]);
 
         DB::table('parcels')->insert([
-            'location' => 1,
+            'name' => 'parcel25',
+            'name' => 'parcel1',
+            'status' => 1,
             'discarded' => 0,
             'payment_amount' => 500,
             'created_at' => Carbon::now(),

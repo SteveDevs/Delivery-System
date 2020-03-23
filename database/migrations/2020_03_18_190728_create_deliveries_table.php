@@ -17,6 +17,7 @@ class CreateDeliveriesTable extends Migration
             $table->id();
             $table->string('courier');
             $table->integer('capacity')->default(50);
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

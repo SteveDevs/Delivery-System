@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class PargonaughtController extends Controller
 {
+    private $STATUS = [
+        '0' => 'Unavailable',
+        '1' => 'Available',
+        '2' => 'Delivering to courier'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +21,7 @@ class PargonaughtController extends Controller
     {
         $pargonaughts = Pargonaught::all();
         $search_route = 'search-pargonaughts';
-        return view('pages.pargonaughts.index',['pargonaughts'=>$pargonaughts, 'search_route'=>$search_route]);
+        return view('pages.pargonaughts.index',['pargonaughts'=>$pargonaughts, 'search_route'=>$search_route, 'statuses'=>$this->STATUS]);
     }
 
     /**
@@ -26,7 +31,7 @@ class PargonaughtController extends Controller
      */
     public function create()
     {
-        return view('pages.pargonaughts.pargonaught.create');
+        return view('pages.pargonaughts.pargonaught.create', ['statuses'=>$this->STATUS]);
     }
 
     /**
@@ -64,7 +69,7 @@ class PargonaughtController extends Controller
     public function edit(Pargonaught $pargonaught)
     {
         $pargonaught::find($pargonaught->id);
-        return view('pages.pargonaughts.pargonaught.edit',['pargonaught'=> $pargonaught]);
+        return view('pages.pargonaughts.pargonaught.edit',['pargonaught'=> $pargonaught, 'statuses'=>$this->STATUS]);
     }
 
     /**
@@ -80,7 +85,7 @@ class PargonaughtController extends Controller
         $pargonaught->status = $request->status;
         $pargonaught->name = $request->name;
         $pargonaught->save(); //persist the data
-        return redirect()->route('pages.pargonaughts.index')->with('info','Pargonaught Updated Successfully');
+        return redirect()->route('pargonaughts.index')->with('info','Pargonaught Updated Successfully');
     }
 
     /**

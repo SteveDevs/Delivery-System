@@ -15,7 +15,8 @@ class CreateParcelsTable extends Migration
     {
         Schema::create('parcels', function (Blueprint $table) {
             $table->id();
-            $table->integer('location');
+            $table->string('name');
+            $table->integer('status');
             $table->integer('discarded');
             $table->float('payment_amount');
             $table->timestamps();

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Edit Order
+    Assign Pargonaughts
 @endsection
 
 @section('template_linked_css')
@@ -21,22 +21,33 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            Edit Order
+                            Assign Pargonaughts
                             <div class="pull-right">
-                                <a href="{{ route('orders.index') }}" class="btn btn-light btn-sm float-right" data-toggle="tooltip" data-placement="top" title="Back">
+                                <a href="{{ route('deliveries.index') }}" class="btn btn-light btn-sm float-right" data-toggle="tooltip" data-placement="top" title="Back">
                                     <i class="fa fa-fw fa-reply-all" aria-hidden="true"></i>
-                                    Back to orders
+                                    Back to deliveries
                                 </a>
+                                <button class="btn btn-secondary data-toggle='modal'" onclick="addPargonaught();">Add</button>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        {!! Form::open(array('route' => ['orders.update', $order->id], 'method' => 'PUT', 'role' => 'form', 'class' => 'needs-validation')) !!}
+                        {!! Form::open(array('route' => ['assign-pargonaughts', $delivery_id], 'method' => 'POST', 'role' => 'form', 'class' => 'needs-validation')) !!}
 
                             {!! csrf_field() !!}
-
+                            <table class="table" id="assign-pargo-add">
+                                <thead class="thead-dark">
+                                    <tr>
+                                    <th scope="col">Pargonaught</th>
+                                    <th scope="col">Parcel</th>
+                                    <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
                             
-                             
+                        
                             {!! Form::button('Save changes', array('class' => 'btn btn-success margin-bottom-1 mb-1 float-left','type' => 'submit' )) !!}
                         {!! Form::close() !!}
                     </div>
@@ -46,8 +57,7 @@
         </div>
     </div>
 
-    @include('modals.modal-save')
-    @include('modals.modal-delete')
+    @include('modals.modal-assign-pargonaught')
 
 @endsection
 

@@ -15,58 +15,53 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            Create New Delivery
+                            Create New Pargonaught
                             <div class="pull-right">
-                                <a href="{{ route('deliveries.index') }}" class="btn btn-light btn-sm float-right" data-toggle="tooltip" data-placement="left" title="{{ trans('usersmanagement.tooltips.back-users') }}">
+                                <a href="{{ route('pargonaughts.index') }}" class="btn btn-light btn-sm float-right" data-toggle="tooltip" data-placement="left" title="Back to pargonughts">
                                     <i class="fa fa-fw fa-reply-all" aria-hidden="true"></i>
-                                    Back to deliveries
+                                    Back to pargonaughts
                                 </a>
                             </div>
                         </div>
                     </div>
 
                     <div class="card-body">
-                        {!! Form::open(array('route' => 'deliveries.store', 'method' => 'POST', 'role' => 'form', 'class' => 'needs-validation')) !!}
+                        {!! Form::open(array('route' => 'pargonaughts.store', 'method' => 'POST', 'role' => 'form', 'class' => 'needs-validation')) !!}
 
                             {!! csrf_field() !!}
 
-                            <div class="form-group has-feedback row {{ $errors->has('courier') ? ' has-error ' : '' }}">
-                                {!! Form::label('courier', 'Courier', array('class' => 'col-md-3 control-label')); !!}
+                            <div class="form-group has-feedback row {{ $errors->has('name') ? ' has-error ' : '' }}">
+                                {!! Form::label('name', 'Name', array('class' => 'col-md-3 control-label')); !!}
                                 <div class="col-md-9">
                                     <div class="input-group">
-                                        {!! Form::text('courier', NULL, array('id' => 'name', 'class' => 'form-control', 'placeholder' => 'Courier')) !!}
+                                        {!! Form::text('name', NULL, array('id' => 'name', 'class' => 'form-control', 'placeholder' => 'Name')) !!}
                                         <div class="input-group-append">
                                             <label class="input-group-text" for="courier">
                                             </label>
                                         </div>
                                     </div>
-                                    @if ($errors->has('courier'))
+                                    @if ($errors->has('name'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('courier') }}</strong>
+                                            <strong>{{ $errors->first('name') }}</strong>
                                         </span>
                                     @endif
                                 </div>
                             </div>
 
-                            <div class="form-group has-feedback row {{ $errors->has('first_name') ? ' has-error ' : '' }}">
-                                {!! Form::label('capacity', 'capacity', array('class' => 'col-md-3 control-label')); !!}
+                            <div class="form-group has-feedback row {{ $errors->has('status') ? ' has-error ' : '' }}">
+                                {!! Form::label('status', 'status', array('class' => 'col-md-3 control-label')); !!}
                                 <div class="col-md-9">
-                                    <div class="input-group">
-                                        {!! Form::text('capacity', NULL, array('id' => 'first_name', 'class' => 'form-control', 'placeholder' => trans('forms.create_user_ph_firstname'))) !!}
-                                        <div class="input-group-append">
-                                            <label class="input-group-text" for="first_name">
-                                                <i class="fa fa-fw" aria-hidden="true"></i>
-                                            </label>
-                                        </div>
+                                <div class="input-group">
+                                    {{!! Form::select('status', $statuses); !!}}
                                     </div>
                                     @if ($errors->has('capacity'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('capacity') }}</strong>
+                                            <strong>{{ $errors->first('status') }}</strong>
                                         </span>
                                     @endif
                                 </div>
                             </div>
-                            {!! Form::button(trans('forms.create_user_button_text'), array('class' => 'btn btn-success margin-bottom-1 mb-1 float-right','type' => 'submit' )) !!}
+                            {!! Form::button('Create', array('class' => 'btn btn-success margin-bottom-1 mb-1 float-right','type' => 'submit' )) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>

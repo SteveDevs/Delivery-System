@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class ParcelController extends Controller
 {
+    private $STATUS = [
+        '0' => 'Supplier',
+        '1' => 'Pargo',
+        '2' => 'Assigned to Pargonaught',
+        '3' => 'Delivery Truck',
+        '4' => 'Delevered'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +23,7 @@ class ParcelController extends Controller
     {
         $parcels = Parcel::all();
         $search_route = 'search-parcels';
-        return view('pages.parcels.index',['parcels'=>$parcels, 'search_route'=>$search_route]);
+        return view('pages.parcels.index',['parcels'=>$parcels, 'search_route'=>$search_route, 'statuses' => $this->STATUS, 'yes_no' => $this->yes_no]);
     }
 
     /**
@@ -26,7 +33,7 @@ class ParcelController extends Controller
      */
     public function create()
     {
-        return view('pages.parcels.parcel.create');
+        return view('pages.parcels.parcel.create', ['yes_no' => $this->yes_no]);
     }
 
     /**
@@ -53,7 +60,7 @@ class ParcelController extends Controller
      */
     public function show(Parcel $parcel)
     {
-        return view('pages.parcels.parcel.parcel', ['parcel' => Parcel::findOrFail($id)]);
+        return view('pages.parcels.parcel.parcel', ['parcel' => Parcel::findOrFail($id), 'yes_no' => $this->yes_no]);
     }
 
     /**
@@ -65,7 +72,7 @@ class ParcelController extends Controller
     public function edit(Parcel $parcel)
     {
         $parcel = Parcel::find($parcel->id);
-        return view('pages.parcels.parcel.edit',['parcel'=> $parcel]);
+        return view('pages.parcels.parcel.edit',['parcel'=> $parcel, 'yes_no' => $this->yes_no]);
     }
 
     /**
@@ -77,7 +84,7 @@ class ParcelController extends Controller
      */
     public function update(Request $request, Parcel $parcel)
     {
-        $parcel::find($request->input('id'));
+        $parcel::find($parcel->id);
         $parcel->location = $request->location;
         $parcel->discarded = $request->discarded;
         $parcel->save(); //persist the data

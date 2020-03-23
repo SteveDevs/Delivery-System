@@ -52,7 +52,7 @@
 
                     <div class="card-body">
                         @include('partials.search-form')
-                        <div class="table-responsive data-table">
+                        <div class="table-responsive data-table-div">
                             <table class="table table-striped table-sm data-table">
                                 <caption id="count">
                                     
@@ -76,8 +76,8 @@
                                             <td class="hidden-xs">{{$delivery->capacity}}</td>
                                             </td>
                                             <td>
-                                                <a class="btn btn-sm btn-success btn-block" href="{{ URL::to('deliveries/' . $delivery->id) }}" data-toggle="tooltip" title="Show">
-                                                    Show
+                                                <a class="btn btn-sm btn-success btn-block" href="{{ route('show-assign-pargonaughts', ['id' => $delivery->id]) }}" data-toggle="tooltip" title="Show">
+                                                    Assign pargonaughts to delivery
                                                 </a>
                                             </td>
                                             <td>

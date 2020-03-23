@@ -10,4 +10,9 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    protected $yes_no =  [
+            '0' => 'No',
+            '1' => 'Yes'
+        ];
 }

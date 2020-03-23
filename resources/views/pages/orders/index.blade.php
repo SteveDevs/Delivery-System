@@ -52,7 +52,7 @@
 
                     <div class="card-body">
                         @include('partials.search-form')
-                        <div class="table-responsive data-table">
+                        <div class="table-responsive data-table-div">
                             <table class="table table-striped table-sm data-table">
                                 <caption id="count">
                                     

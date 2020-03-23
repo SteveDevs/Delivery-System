@@ -69,7 +69,7 @@ class PargonaughtTableSeeder extends Seeder
 
         DB::table('pargo_naughts')->insert([
             'name' => 'pargonaught9',
-            'status' => 3,
+            'status' => 0,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
@@ -90,14 +90,14 @@ class PargonaughtTableSeeder extends Seeder
 
         DB::table('pargo_naughts')->insert([
             'name' => 'pargonaught12',
-            'status' => 3,
+            'status' => 0,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
 
         DB::table('pargo_naughts')->insert([
             'name' => 'pargonaught13',
-            'status' => 3,
+            'status' => 0,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
