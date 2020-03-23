@@ -15,8 +15,8 @@ class CreateOrderParcelsTable extends Migration
     {
         Schema::create('order_parcels', function (Blueprint $table) {
             $table->primary(['order_id', 'parcel_id']);
-            $table->integer('order_id');
-            $table->integer('parcel_id');
+            $table->bigInteger('order_id');
+            $table->bigInteger('parcel_id');
             $table->float('payment_amount');
             //$table->foreign('delivery_id')->references('id')->on('deliveries')->onDelete('cascade');
             //$table->foreign('parcel_id')->references('id')->on('parcels')->onDelete('cascade');

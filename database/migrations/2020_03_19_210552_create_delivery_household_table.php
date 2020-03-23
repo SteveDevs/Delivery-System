@@ -15,8 +15,8 @@ class CreateDeliveryHouseholdTable extends Migration
     {
         Schema::create('delivery_household', function (Blueprint $table) {
             $table->primary(['delivery_id', 'household_id']);
-            $table->integer('delivery_id');
-            $table->integer('household_id');
+            $table->bigInteger('delivery_id');
+            $table->bigInteger('household_id');
             //$table->foreign('delivery_id')->references('id')->on('deliveries')->onDelete('cascade');
             //$table->foreign('household_id')->references('id')->on('households')->onDelete('cascade');
             $table->timestamps();
