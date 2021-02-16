@@ -1,6 +1,6 @@
-Pargo Delivery System.
+Delivery System.
 
-Database used:  name=pargo
+Database used:  name=example
                 database type: mysql
 
 Requirements:
@@ -9,7 +9,7 @@ composer
 
 How to run application:
 
-1. git clone https://github.com/SteveDevs/pargo.git
+1. git clone https://github.com/SteveDevs/Delivery-System.git
 2. Create database called pargo or any database name you prefer.
 3. set up .env file: 
     DB_CONNECTION=mysql
@@ -32,7 +32,7 @@ Database structure: See database.png
 
 How application should run:
 
-Logins should be seperated into Admin and Pargonaughts.
+Logins should be seperated into Admin and Employees.
 
 Admins have full access to manage and edit all data.
 employees only have access to view what dilivery assignment they have been allocated to by the admin.
@@ -44,7 +44,7 @@ This order would contain the parcels and the household where it would need to go
 
 The parcels would get ordered from the supplier where the parcels would get stored at pargo when the parcels arrive.
 
-Depending on the availabilty of the pargonaugh the parcel and delivery would get assigned to the pargo naught. More than one paricualr pargonaught can be assigned to a delivery.
+Depending on the availabilty of the employee the parcel and delivery would get assigned to the employee. More than one paricualr employee can be assigned to a delivery.
 
 Depending on whether or not all parcels would be delivered to the households the households might recieved more than one delivery.
 
