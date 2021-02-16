@@ -15,7 +15,7 @@ How to run application:
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
     DB_PORT=3306
-    DB_DATABASE=pargo
+    DB_DATABASE=example
     DB_USERNAME=your_user_name
     DB_PASSWORD=your_password
 
@@ -35,7 +35,7 @@ How application should run:
 Logins should be seperated into Admin and Pargonaughts.
 
 Admins have full access to manage and edit all data.
-Pargonaughts only have access to view what dilivery assignment they have been allocated to by the admin.
+employees only have access to view what dilivery assignment they have been allocated to by the admin.
 
 Flow:
 
