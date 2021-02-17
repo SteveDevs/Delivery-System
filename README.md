@@ -39,12 +39,12 @@ employees only have access to view what dilivery assignment they have been alloc
 
 Flow:
 
-The order would come in remotely, then the admin would put this order into the pargo system.
+The order would come in remotely, then the admin would put this order into the system.
 This order would contain the parcels and the household where it would need to go.
 
-The parcels would get ordered from the supplier where the parcels would get stored at pargo when the parcels arrive.
+The parcels would get ordered from the supplier where the parcels would get stored at at delivery sytem home when the parcels arrive.
 
-Depending on the availabilty of the employee the parcel and delivery would get assigned to the employee. More than one paricualr employee can be assigned to a delivery.
+Depending on the availabilty of the employee the parcel and delivery would get assigned to the employee. More than one particular employee can be assigned to a delivery.
 
 Depending on whether or not all parcels would be delivered to the households the households might recieved more than one delivery.
 
